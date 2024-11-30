@@ -1,1 +1,1 @@
-#define ARRAY_LEN(a) (*(&a + 1) - a)
+#define ARRAY_LENGTH(a) (*(&a + 1) - a)
