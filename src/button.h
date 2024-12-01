@@ -3,7 +3,7 @@ enum button_state{
     down
 };
 
-struct button{
+struct Button{
    int pin;
    void (*on_down)();    
    void (*on_click)();
@@ -12,14 +12,14 @@ struct button{
    enum button_state state;
 };
 
-void init_buttons(struct button buttons[], int count);
+void init_buttons(struct Button buttons[], int count);
 
-void process_button_events(struct button buttons[], int count);
+void process_button_events(struct Button buttons[], int count);
 
-static void process_down_event(struct button *button);
+static void process_down_event(struct Button *button);
 
-static void process_click_event(struct button *button);
+static void process_click_event(struct Button *button);
 
-static void process_up_event(struct button *button);
+static void process_up_event(struct Button *button);
 
-static void process_release_event(struct button *button);
+static void process_release_event(struct Button *button);
