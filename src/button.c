@@ -6,6 +6,7 @@ void init_buttons(struct button buttons[], int count){
         buttons[i].pin = 0;
         buttons[i].state = up;
         buttons[i].on_click = NULL;
+        buttons[i].on_release = NULL;
         buttons[i].on_down = NULL;
         buttons[i].on_up = NULL;
     }
@@ -40,9 +41,20 @@ static void process_click_event(struct button *button){
 
 static void process_up_event(struct button *button){
     if (gpio_get(button->pin) == 0){
+        if (button->state == down){
+            process_release_event(button);
+        }
+        
         button->state = up;
+        
         if (button->on_up != NULL){
             button->on_up();
         }
     }
+}
+
+static void process_release_event(struct button *button){
+    if (button->on_release != NULL){
+        button->on_release();
+    }    
 }
