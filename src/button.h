@@ -2,8 +2,8 @@
 #define BUTTON_H_
 
 enum button_state{
-    up,
-    down
+    UP,
+    DOWN
 };
 
 struct Button{
