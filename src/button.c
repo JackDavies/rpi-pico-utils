@@ -19,6 +19,21 @@ void process_button_events(struct Button buttons[], int count){
     }
 }
 
+void setup_button_pins(struct Button buttons[], int count){
+    for (int i = 0; i <= count - 1; i++){
+        gpio_init(buttons[i].pin);
+        gpio_set_dir(buttons[i].pin, GPIO_IN);
+        
+        if (buttons[i].pull == PULL_UP){
+            gpio_pull_up(buttons[i].pin);
+        }else if (buttons[i].pull == PULL_DOWN){
+            gpio_pull_down(buttons[i].pin);
+        }else if (buttons[i].pull == PULL_NONE){
+            gpio_set_pulls (i, false, false);
+        }
+    }
+}
+
 static void process_down_event(struct Button *button){
     if (gpio_get(button->pin) == 1){          
         if (button->state == UP){

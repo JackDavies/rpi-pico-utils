@@ -6,6 +6,12 @@ enum button_state{
     DOWN
 };
 
+enum pin_pull{
+    PULL_NONE,
+    PULL_UP,
+    PULL_DOWN
+};
+
 struct Button{
    int pin;
    void (*on_down)();    
@@ -13,9 +19,12 @@ struct Button{
    void (*on_release)();
    void (*on_up)();
    enum button_state state;
+   enum pin_pull pull;
 };
 
 void init_buttons(struct Button buttons[], int count);
+
+void setup_button_pins(struct Button buttons[], int count);
 
 void process_button_events(struct Button buttons[], int count);
 
