@@ -1,3 +1,6 @@
+#ifndef BUTTON_H_
+#define BUTTON_H_
+
 enum button_state{
     up,
     down
@@ -23,3 +26,5 @@ static void process_click_event(struct Button *button);
 static void process_up_event(struct Button *button);
 
 static void process_release_event(struct Button *button);
+
+#endif
