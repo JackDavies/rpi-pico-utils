@@ -3,7 +3,7 @@
 
 void init_buttons(struct Button buttons[], int count){
     for (int i = 0; i <= count - 1; i++){
-        buttons[i].pin = 0;
+        buttons[i].pin = -1;
         buttons[i].state = UP;
         buttons[i].on_click = NULL;
         buttons[i].on_release = NULL;
@@ -14,22 +14,26 @@ void init_buttons(struct Button buttons[], int count){
 
 void process_button_events(struct Button buttons[], int count){    
     for (int i = 0; i <= count - 1; i++){
-        process_down_event(&buttons[i]);
-        process_up_event(&buttons[i]);
+        if (buttons[i].pin != -1){
+            process_down_event(&buttons[i]);
+            process_up_event(&buttons[i]);
+        }
     }
 }
 
 void setup_button_pins(struct Button buttons[], int count){
     for (int i = 0; i <= count - 1; i++){
-        gpio_init(buttons[i].pin);
-        gpio_set_dir(buttons[i].pin, GPIO_IN);
-        
-        if (buttons[i].pull == PULL_UP){
-            gpio_pull_up(buttons[i].pin);
-        }else if (buttons[i].pull == PULL_DOWN){
-            gpio_pull_down(buttons[i].pin);
-        }else if (buttons[i].pull == PULL_NONE){
-            gpio_set_pulls (i, false, false);
+        if (buttons[i].pin != -1){
+            gpio_init(buttons[i].pin);
+            gpio_set_dir(buttons[i].pin, GPIO_IN);
+            
+            if (buttons[i].pull == PULL_UP){
+                gpio_pull_up(buttons[i].pin);
+            }else if (buttons[i].pull == PULL_DOWN){
+                gpio_pull_down(buttons[i].pin);
+            }else if (buttons[i].pull == PULL_NONE){
+                gpio_set_pulls (i, false, false);
+            }
         }
     }
 }
